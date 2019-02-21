@@ -1,2 +1,5 @@
 # go-flows-gui
-gui for go-flows
+
+A Graphical User Interface for The Flow Extractor
+
+Under developement...

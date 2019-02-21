@@ -1,11 +1,17 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '1.ui'
+#******************************************************************************
 #
-# Created by: PyQt4 UI code generator 4.12.1
+# Copyright (C) 2019, Institute of Telecommunications, TU Wien
 #
-# WARNING! All changes made in this file will be lost!
+# Name        : main.py
+# Description : a GUI for the Flow Extractor with all basic features
+# Author      : Fares Meghdouri
+#
+# Notes : known limitations: ***
+#
+#******************************************************************************
 
 import os
 import subprocess
@@ -338,7 +344,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "Flow Exporter - GUI - TUWIEN - CN group", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Flow Extractor - GUI - TUWIEN - CN group", None))
         self.pushButton.setText(_translate("MainWindow", "PCAPs", None))
         self.pushButton_2.setText(_translate("MainWindow", "Output", None))
         self.pushButton_3.setText(_translate("MainWindow", "Select features", None))
