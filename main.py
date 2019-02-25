@@ -10,6 +10,8 @@
 # Author      : Fares Meghdouri
 #
 # Notes : known limitations: online-offline modes are not implemented yet
+#                            saving and loading configurations (features, key, json are not implemented yet)
+#
 #
 #******************************************************************************
 
@@ -18,6 +20,7 @@ import subprocess
 from PyQt4 import QtCore, QtGui
 import pickle
 import json
+import PyQt4
 
 pcaps = []
 options = {}
@@ -195,8 +198,13 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(886, 596)
+        MainWindow.setFixedSize(MainWindow.size())
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
+
+        self.grid = QtGui.QGridLayout()
+        self.grid.setColumnStretch ( 1, 1)
+        self.grid.setRowStretch ( 1, 1)
 
         self.pushButton = QtGui.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(750, 90, 97, 30))
