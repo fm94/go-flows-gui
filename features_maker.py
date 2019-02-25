@@ -127,11 +127,12 @@ class Ui_DockWidget(object):
         QtCore.QMetaObject.connectSlotsByName(DockWidget)
 
         # check if there is a configuration already
-        if os.path.isfile('tmp.fe.Features') and not os.stat("tmp.fe.Features").st_size == 0:
-        	with open ('tmp.fe.Features', 'rb') as fp:
-        		self.features = pickle.load(fp)
-			self.displayedText = [json.dumps(x) if type(x) == dict else x for x in self.features]
-    		self.plainTextEdit.setPlainText(",\n".join(self.displayedText))
+        if os.path.isfile('tmp.raw.Features') and not os.stat("tmp.raw.Features").st_size == 0:
+        	with open ('tmp.raw.Features', 'rb') as fp:
+        		#self.features = pickle.load(fp)
+			#self.displayedText = [json.dumps(x) if type(x) == dict else x for x in self.features]
+    		#self.plainTextEdit.setPlainText(",\n".join(self.displayedText))
+    			self.plainTextEdit.setPlainText(fp.read())
 
     def retranslateUi(self, DockWidget):
         DockWidget.setWindowTitle(_translate("DockWidget", "NTARC Features Maker - TUWIEN - CN group", None))
@@ -149,17 +150,17 @@ class Ui_DockWidget(object):
         	except Exception as e:
         		print(e)
         		self.errors.append('check: {}'.format(line))
-        print("errors:\n {}".format(self.errors))
-        #self.displayedText = [json.dumps(x) if type(x) == dict else x for x in self.features]
-        #self.plainTextEdit.setPlainText(",\n".join(self.displayedText))
-        self.pushButton_2.setText("Verify and Apply")
+        if len(self.errors) != 0:
+                print("errors:\n {}".format(self.errors))
 
     def clear(self):
     	self.plainTextEdit.setPlainText('')
 
     def validate(self):
     	self.check()
-        with open('tmp.fe.Features', 'wb') as fp:
+    	with open('tmp.raw.Features', "w") as fp:
+    		fp.write(str(self.plainTextEdit.toPlainText()))
+    	with open('tmp.fe.Features', "w") as fp:
         	pickle.dump(self.features, fp)
         DockWidget.close()
 

@@ -9,18 +9,21 @@
 # Description : a GUI for the Flow Extractor with all basic features
 # Author      : Fares Meghdouri
 #
-# Notes : known limitations: ***
+# Notes : known limitations: online-offline modes are not implemented yet
 #
 #******************************************************************************
 
 import os
 import subprocess
 from PyQt4 import QtCore, QtGui
+import pickle
+import json
 
 pcaps = []
 options = {}
 l_short = []
 l_long = []
+_type = False
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -35,9 +38,6 @@ try:
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
-
-def wrapper():
-    print "hello"
 
 def callFeaturesMaker():
     os.system("./features_maker.py")
@@ -58,11 +58,6 @@ def Run(file):
     if options["mode"] == "online":
         pass
     elif options["mode"] == "offline":
-        pass
-
-    if options["flowType"] == "unidirectionnal":
-        pass
-    elif options["flowType"] == "bidirectionnal":
         pass
     """
     if "active" in options:
@@ -112,6 +107,22 @@ def Run(file):
     output = run.communicate()[0]
 
     return
+
+def createConfig():
+
+    cfg = {}
+
+    with open ('tmp.fe.Features', 'rb') as fp:
+        features = pickle.load(fp)
+    with open ('tmp.fe.Key', 'rb') as fp:
+        key      = pickle.load(fp)
+
+    cfg["features"] = features
+    cfg["key_features"] = key
+    cfg["bidirectionnal"] = not _type
+
+    with open("default_configuration.json", 'w') as f:
+        json.dump(cfg, f)
 
 class Ui_MainWindow(object):
     
@@ -303,6 +314,7 @@ class Ui_MainWindow(object):
         self.pushButton_7 = QtGui.QPushButton(self.centralwidget)
         self.pushButton_7.setGeometry(QtCore.QRect(550, 170, 191, 30))
         self.pushButton_7.setObjectName(_fromUtf8("pushButton_7"))
+        self.pushButton_7.clicked.connect(createConfig)
 
         self.type_group=QtGui.QButtonGroup(self.centralwidget)
         self.radioButton_3 = QtGui.QRadioButton(self.centralwidget)
@@ -318,6 +330,8 @@ class Ui_MainWindow(object):
         self.radioButton_4.setGeometry(QtCore.QRect(640, 20, 115, 22))
         self.radioButton_4.setObjectName(_fromUtf8("radioButton_4"))
         self.type_group.addButton(self.radioButton_4)
+        global _type
+        _type = self.radioButton_4
 
         self.label_5 = QtGui.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(300, 30, 300, 31))

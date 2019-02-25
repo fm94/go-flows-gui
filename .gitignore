@@ -1,5 +1,5 @@
 *default_configuration.json
 *.pcap
 *.csv
-*.fe.Features
-*.fe.Key
+*.Features
+*.Key
